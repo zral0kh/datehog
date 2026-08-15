@@ -1,0 +1,18 @@
+# Python dependencies for the test harness.
+#
+# Deliberately tiny. The unit tests are Typst assertions (`tests/test.typ`),
+# and the two differential harnesses are plain scripts driven by
+# `tests/run.sh` — no pytest. The only third-party import comes in
+# transitively: `tests/compare.py` imports flint-py's `js_date` to check
+# bug-for-bug compatibility against, and that module needs `dateutil`.
+#
+# `flint-py` itself is not installed from PyPI; `tests/compare.py` imports it
+# from the sibling flint-typst checkout by path, and skips that suite if it is
+# absent.
+#
+#   uv venv .venv && VIRTUAL_ENV=.venv uv pip install -r requirements.txt
+#
+# One pinned dependency does not justify a lock file; if this list ever grows
+# past a handful, switch to `uv pip compile` and commit the lock instead.
+
+python-dateutil==2.9.0.post0
