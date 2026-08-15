@@ -1,0 +1,13 @@
+[package]
+name = "datehog"
+version = "0.1.0"
+entrypoint = "src/lib.typ"
+authors = ["Zral0kh"]
+license = "MIT"
+description = "Date parsing and epoch arithmetic for Typst, with a bug-for-bug JavaScript Date.parse mode."
+keywords = ["date", "time", "parse", "iso8601", "timestamp"]
+categories = ["utility"]
+# Verified on 0.15.1. The floor is a conservative estimate -- nothing here uses
+# a recent feature, but older releases have not been tested. See README.
+compiler = "0.13.0"
+exclude = ["tests"]
