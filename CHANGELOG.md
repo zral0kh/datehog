@@ -1,5 +1,9 @@
 # Changelog of all Changes to Datehog
 
+## v0.1.1
+
+No functional changes. The `v0.1.0` was prematurely created without this changelog and the release pipeline.
+
 ## v0.1.0
 
 Initial release. Parses date strings and epoch milliseconds into a plain
