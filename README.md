@@ -226,7 +226,7 @@ Three constraints shaped the code, all of them worth knowing if you extend it.
 **Typst's regex engine has no backreferences.** It is Rust's `regex` crate,
 which is finite-automaton based. A pattern like
 
-```
+```regex
 ^\s*(\d{1,4})\s*([./-])\s*(\d{1,2})\s*\2\s*(\d{1,4})\s*$
 ```
 
