@@ -1,9 +1,10 @@
 // datehog unit tests.
 //
 // Every check is an `assert`, so the suite passes exactly when this file
-// compiles. Run with `tests/run.sh`, or:
+// runs cleanly -- nothing renders, so there is no PDF to compile. Run with
+// `tests/run.sh`, or:
 //
-//   typst compile --root . tests/test.typ /dev/null --format pdf
+//   typst eval --root . --in tests/test.typ '"ok"'
 //
 // Differential tests against V8 and flint-py live in `compare.py`; this file
 // covers the arithmetic and the edges that have no external reference.

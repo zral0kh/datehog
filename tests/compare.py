@@ -145,21 +145,29 @@ def main() -> int:
 
     agree_v8 = agree_flint = 0
     # datehog's contract is flint-py compatibility, because the conformance
-    # corpus is generated from flint-py. Divergence from V8 is only a failure
-    # when flint-py agrees with V8 and datehog does not -- that is datehog's
-    # own bug. Where flint-py already differs from V8, matching flint-py is
-    # the correct behaviour.
+    # corpus is generated from flint-py -- but only where flint-py itself
+    # agrees with V8. Where flint-py has its own bug (diverges from V8),
+    # datehog follows V8 instead, on the view that a real parse is better
+    # than an inherited mistake. So a case where datehog disagrees with
+    # flint-py is a genuine bug only if flint-py was matching V8 there; if
+    # flint-py was already wrong and datehog produced V8's answer, that is
+    # the documented, intended behaviour. See CHANGELOG.md.
     own_bugs: list[tuple[str, object, object, object]] = []
     inherited: list[tuple[str, object, object, object]] = []
+    v8_preferred: list[tuple[str, object, object, object]] = []
 
     for i, c in enumerate(cases):
         d, j, f = norm(dh[i]), norm(v8[i]), norm(flint[i])
         agree_v8 += int(d == j)
         agree_flint += int(d == f if have_flint else True)
-        if have_flint and d != f:
-            own_bugs.append((c, d, j, f))
-        elif d != j:
-            inherited.append((c, d, j, f))
+        if not have_flint or d == f:
+            continue
+        if f == j:
+            own_bugs.append((c, d, j, f))       # flint-py matched V8; datehog missed
+        elif d == j:
+            v8_preferred.append((c, d, j, f))   # flint-py's own bug; datehog follows V8
+        else:
+            own_bugs.append((c, d, j, f))       # three-way disagreement
 
     print(f"datehog == flint-py : {agree_flint}/{len(cases)}   <- the contract")
     print(f"datehog == V8       : {agree_v8}/{len(cases)}")
@@ -175,12 +183,16 @@ def main() -> int:
         print(f"\n{len(inherited)} divergences from V8 that flint-py shares (expected, not failures):")
         table(inherited)
 
+    if v8_preferred:
+        print(f"\n{len(v8_preferred)} deviations from flint-py, matching V8 instead (expected, not failures):")
+        table(v8_preferred)
+
     if own_bugs:
         print(f"\n{len(own_bugs)} DISAGREEMENTS WITH flint-py:")
         table(own_bugs)
         return 1
 
-    print("\ndatehog matches flint-py on every case")
+    print("\ndatehog matches flint-py, or V8 where flint-py itself is wrong, on every case")
     return 0
 
 

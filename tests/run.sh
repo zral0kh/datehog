@@ -12,7 +12,10 @@ fail=0
 echo "== unit tests =="
 out=$(mktemp -d)
 trap 'rm -rf "$out"' EXIT
-if typst compile --root . --format pdf tests/test.typ "$out/test.pdf" 2>"$out/err"; then
+# Every check is an assert and nothing renders, so `eval` (no layout, no PDF)
+# is enough -- `--in` runs the file for its side effects, `"ok"` is just an
+# expression to evaluate once it has.
+if typst eval --root . --in tests/test.typ '"ok"' >/dev/null 2>"$out/err"; then
   echo "   pass"
 else
   sed 's/^/   /' "$out/err"
