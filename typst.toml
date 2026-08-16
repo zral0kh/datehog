@@ -7,6 +7,7 @@ license = "MIT"
 description = "Date parsing and epoch arithmetic for Typst, with a bug-for-bug JavaScript Date.parse mode."
 keywords = ["date", "time", "parse", "iso8601", "timestamp"]
 categories = ["utility"]
+repository = "https://github.com/zral0kh/datehog"
 # Verified on 0.15.1. The floor is a conservative estimate -- nothing here uses
 # a recent feature, but older releases have not been tested. See README.
 compiler = "0.13.0"
