@@ -1,6 +1,7 @@
 # datehog
 
-Date parsing and epoch arithmetic for Typst.
+Date parsing and epoch arithmetic for Typst. \
+For the changes see the [Changelog](./CHANGELOG.md).
 
 Typst's built-in `datetime` can be constructed from calendar parts and
 formatted, but it cannot parse a string and has no epoch conversion:
@@ -290,15 +291,20 @@ want to check before converting.
 ```
 
 - `test.typ` — assertions covering the arithmetic and the edges with no
-  external reference. The suite passes exactly when the file compiles.
+  external reference. The suite passes exactly when the file runs cleanly.
 - `civil_differential.py` — 29 031 dates from 1600 to 2400, every month
   boundary and leap-year edge, checked against Python's `datetime`.
 - `compare.py` — every date-shaped string in a real fixture corpus plus
   hand-picked edge cases, run through datehog, V8 and flint-py. Gated on
-  flint-py agreement; V8 divergences are reported but expected.
+  flint-py agreement, with one exception: where flint-py itself diverges from
+  V8, datehog is expected to follow V8 rather than replicate the mistake (see
+  [CHANGELOG.md](CHANGELOG.md) for the specific cases). Only a disagreement
+  with flint-py that isn't explained by one of those two patterns fails the
+  suite.
 
-Current status: unit tests pass, 29 031/29 031 calendar dates match, 445/445
-parser cases match flint-py.
+Current status: unit tests pass, 29 031/29 031 calendar dates match, and on
+445/445 parser cases datehog matches flint-py or, where flint-py itself is
+wrong, matches V8 instead.
 
 ## License
 
