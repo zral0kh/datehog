@@ -19,7 +19,7 @@ Python's `datetime`; **445/445** parser cases match the reference implementation
 it is calibrated against. Details under [Testing](#testing).
 
 ```typst
-#import "@preview/datehog:0.1.0" as dh
+#import "@preview/datehog:0.1.1" as dh
 
 #dh.parse("2020-03-14T08:30:00Z").day        // 14
 #dh.parse("Feb 2020").month                  // 2

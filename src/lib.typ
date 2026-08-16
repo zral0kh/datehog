@@ -5,7 +5,7 @@
 // fills exactly that gap: strings and epoch milliseconds in, a plain-dictionary
 // `moment` out, everything in UTC and everything a pure function.
 //
-//   #import "@preview/datehog:0.1.0" as dh
+//   #import "@preview/datehog:0.1.1" as dh
 //   #dh.parse("2020-03-14T08:30:00Z").day        // 14
 //   #dh.to-iso(dh.from-ms(1584174600000))        // "2020-03-14T08:30:00.000Z"
 //   #dh.js.parse-ms("FY 2018")                   // 1514764800000
